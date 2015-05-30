@@ -9,6 +9,7 @@ public class TerrainMap extends Map{
 
 	public TerrainMap(int xOffset, int yOffset, float zOffset) {
 		super(400, 400, 8, xOffset, yOffset, zOffset);
+		//super(800, 800, 8, xOffset, yOffset, zOffset);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -22,8 +23,9 @@ public class TerrainMap extends Map{
 		BufferedImage croppedMap = new BufferedImage(256, 256, map.getType());
 		Graphics g = croppedMap.getGraphics();
 		g.drawImage(map, 0, 0, 256, 256, 72, 72, 328, 328, null);
+		//g.drawImage(map, 0, 0, 256, 256, 272, 272, 528, 528, null);
 		
-		return null;
+		return croppedMap;
 	}
 
 }
