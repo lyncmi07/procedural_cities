@@ -9,7 +9,16 @@ import javax.swing.WindowConstants;
 
 import maps.Map;
 
+/**
+ * Gives several useful functions for debugging while producing maps
+ * @author michael
+ *
+ */
 public class MapDebug {
+	/**
+	 * Prints a map to the screen
+	 * @param map map to be printed to screen
+	 */
 	public static void printMapToScreen(Map map)
 	{
 		

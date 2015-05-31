@@ -5,15 +5,26 @@ import java.awt.image.BufferedImage;
 
 import proceduralgeneration.GeneratedImages;
 
+/**
+ * A type of map that holds data on the height of the terrain
+ * @author michael
+ *
+ */
 public class TerrainMap extends Map{
 
+	/**
+	 * 
+	 * @param xOffset The x offset of the map
+	 * @param yOffset The y offset of the map
+	 * @param zOffset The z offset (time) of the map
+	 */
 	public TerrainMap(int xOffset, int yOffset, float zOffset) {
 		super(400, 400, 8, xOffset, yOffset, zOffset);
 		//super(800, 800, 8, xOffset, yOffset, zOffset);
 		// TODO Auto-generated constructor stub
 	}
 
-	@Override
+	//@Override
 	protected BufferedImage generateMap(int width, int height, int zoomLevel,
 			int xOffset, int yOffset, float zOffset) {
 		// TODO Auto-generated method stub

@@ -4,7 +4,21 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 
+/**
+ * A group of function which purpose is to procedurally generate related maps
+ * @author michael
+ *
+ */
 public class GeneratedImages {
+	/**
+	 * 
+	 * @param width width of map
+	 * @param height height of map
+	 * @param xOffset x offset of map
+	 * @param yOffset y offset of map
+	 * @param zPosition	z offset (time) of map
+	 * @return BufferedImage representation of the map produces
+	 */
 	public static BufferedImage generationSystem1(int width, int height, double xOffset, double yOffset, double zPosition)
 	{
 		
@@ -40,6 +54,13 @@ public class GeneratedImages {
 		return (int)(number * 255);
 	}
 	
+	/**
+	 * Takes an input image and repeats it over a larger size going back on itself when it reaches the edge of each image
+	 * @param width width of the new image
+	 * @param height height of the new image
+	 * @param oldImage the image to repeat
+	 * @return
+	 */
 	public static BufferedImage createRepeatingTexture(int width, int height, BufferedImage oldImage)
 	{
 		BufferedImage newImage = new BufferedImage(width, height, oldImage.getType());
@@ -63,6 +84,13 @@ public class GeneratedImages {
 		return newImage;
 	}
 	
+	/**
+	 * Combines two images by making the second image slightly effect the first image by a given amount
+	 * @param image1 high presidence image
+	 * @param image2 low presidence image
+	 * @param adjustmentRange The range of which to change the first image by
+	 * @return
+	 */
 	public static BufferedImage combineImagesByAdjustment(BufferedImage image1, BufferedImage image2, double adjustmentRange)
 	{
 		double adjustmentRatio = 255 / adjustmentRange;
@@ -102,6 +130,16 @@ public class GeneratedImages {
 		return newImage;
 	}
 	
+	/**
+	 * Gives an image that looks much like clouds that can be used to imitate terrain
+	 * @param width width of the map
+	 * @param height height of the map
+	 * @param xOffset x offset of the map
+	 * @param yOffset y offset of the map
+	 * @param numberOfLevels number of iterations into the algorithm to go (effectively the zoom level)
+	 * @param zPosition z offset (time) of the map
+	 * @return A BufferedImage representation of the image produced using the generationSystem1 function
+	 */
 	public static BufferedImage generateCombinationTerrainImage(int width, int height, double xOffset, double yOffset, double numberOfLevels, double zPosition)
 	{
 		if(width <= 0)
