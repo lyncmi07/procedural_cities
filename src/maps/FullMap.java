@@ -49,8 +49,11 @@ public class FullMap {
 		int terrainHeight = terrainMap.getValueAtCoord(x, y);
 		boolean isOnLand = landSeaMap.getValueAtCoord(x, y);
 		boolean isInCity = citiesMap.getValueAtCoord(x, y);
+		double cityID = citiesMap.getIDAtCoord(x, y);
 		boolean isInCityGreenSpace = cityGreenSpaceMap.getValueAtCoord(x, y);
+		double greenSpaceID = cityGreenSpaceMap.getIDAtCoord(x, y);
 		boolean isAtCityAttraction = cityAttractionsMap.getValueAtCoord(x, y);
+		double cityAttractionID = cityAttractionsMap.getIDAtCoord(x, y);
 		int currentWealthArea = wealthMap.getValueAtCoord(x, y);
 		int currentZoningArea = zoningMap.getValueAtCoord(x, y);
 		
@@ -87,6 +90,10 @@ public class FullMap {
 				"Is in city: " + isInCity + "\n" + 
 				"Is in city green space: " + isInCityGreenSpace + "\n" +
 				"Is at city attraction: " + isAtCityAttraction + "\n" +
-				"Is in " + wealthAreaName + " " + zoningAreaName + " area";
+				"Is in " + wealthAreaName + " " + zoningAreaName + " area \n" +
+				"IDs: \n" + 
+				"City ID: " + cityID + "\n" +
+				"Green Space ID: " + greenSpaceID + "\n" +
+				"City Attraction ID: " + cityAttractionID;
 	}
 }

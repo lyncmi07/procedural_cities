@@ -13,7 +13,7 @@ import imageprocessing.Filters;
  * @author michael
  *
  */
-public class CitiesMap extends BinaryMap{
+public class CitiesMap extends UniquelyIdentifiableBinaryMap{
 	
 	/**
 	 * Creates a map of cities as white

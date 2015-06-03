@@ -44,7 +44,6 @@ public class Main {
 		debug.MapDebug.printMapToScreen(fullMap.getLandSeaMap());
 		debug.MapDebug.printMapToScreen(fullMap.getCitiesMap());
 		
-		System.out.println(fullMap.getPixelRundown(170, -170));
-		
+		System.out.println(fullMap.getPixelRundown(172, -170));
 	}
 }

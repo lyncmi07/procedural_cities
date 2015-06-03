@@ -14,7 +14,7 @@ import proceduralgeneration.GeneratedImages;
  * @author michael
  *
  */
-public class CityGreenSpaceMap extends BinaryMap{
+public class CityGreenSpaceMap extends UniquelyIdentifiableBinaryMap{
 	
 	/**
 	 * Creates a map of city green spaces (parks) as white

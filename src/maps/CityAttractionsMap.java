@@ -14,7 +14,7 @@ import proceduralgeneration.GeneratedImages;
  * @author michael
  *
  */
-public class CityAttractionsMap extends BinaryMap{
+public class CityAttractionsMap extends UniquelyIdentifiableBinaryMap{
 	
 	/**
 	 * Creates a map of city attractions as white
