@@ -39,11 +39,11 @@ public class Main {
 		debug.MapDebug.printMapToScreen(wealthMap);
 		debug.MapDebug.printMapToScreen(zoningMap);*/
 		
-		FullMap fullMap = new FullMap(0, 0, 0);
+		FullMap fullMap = new FullMap(0, 1, 0);
 		
 		debug.MapDebug.printMapToScreen(fullMap.getLandSeaMap());
 		debug.MapDebug.printMapToScreen(fullMap.getCitiesMap());
 		
-		System.out.println(fullMap.getPixelRundown(172, -170));
+		System.out.println(fullMap.getPixelRundown(380, 380));
 	}
 }

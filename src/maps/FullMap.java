@@ -1,5 +1,8 @@
 package maps;
 
+import stringgeneration.CityNames;
+import stringgeneration.GreenSpaceNames;
+
 public class FullMap {
 	private TerrainMap terrainMap;
 	private LandSeaMap landSeaMap;
@@ -49,11 +52,11 @@ public class FullMap {
 		int terrainHeight = terrainMap.getValueAtCoord(x, y);
 		boolean isOnLand = landSeaMap.getValueAtCoord(x, y);
 		boolean isInCity = citiesMap.getValueAtCoord(x, y);
-		double cityID = citiesMap.getIDAtCoord(x, y);
+		long cityID = citiesMap.getIDAtCoord(x, y);
 		boolean isInCityGreenSpace = cityGreenSpaceMap.getValueAtCoord(x, y);
-		double greenSpaceID = cityGreenSpaceMap.getIDAtCoord(x, y);
+		long greenSpaceID = cityGreenSpaceMap.getIDAtCoord(x, y);
 		boolean isAtCityAttraction = cityAttractionsMap.getValueAtCoord(x, y);
-		double cityAttractionID = cityAttractionsMap.getIDAtCoord(x, y);
+		long cityAttractionID = cityAttractionsMap.getIDAtCoord(x, y);
 		int currentWealthArea = wealthMap.getValueAtCoord(x, y);
 		int currentZoningArea = zoningMap.getValueAtCoord(x, y);
 		
@@ -93,7 +96,9 @@ public class FullMap {
 				"Is in " + wealthAreaName + " " + zoningAreaName + " area \n" +
 				"IDs: \n" + 
 				"City ID: " + cityID + "\n" +
+				"City name: " + CityNames.getCityName(cityID) + "\n" +
 				"Green Space ID: " + greenSpaceID + "\n" +
+				"Green Space Name: " + GreenSpaceNames.getGreenSpaceName(greenSpaceID) + "\n" +
 				"City Attraction ID: " + cityAttractionID;
 	}
 }

@@ -50,10 +50,10 @@ public class UniquelyIdentifiableBinaryMap extends BinaryMap{
 		processingImage.setRGB(x, y, (red << 16) | (green << 8) | (blue));
 		
 		double returnValue = 0;
-		returnValue += getUniqueIdentifier(x-1,y, processingImage);
-		returnValue += getUniqueIdentifier(x+1,y, processingImage);
-		returnValue += getUniqueIdentifier(x,y-1, processingImage);
-		returnValue += getUniqueIdentifier(x,y+1, processingImage);
+		if(x > 0){returnValue += getUniqueIdentifier(x-1,y, processingImage);}
+		if(x < processingImage.getWidth()-1){returnValue += getUniqueIdentifier(x+1,y, processingImage);}
+		if(y > 0){returnValue += getUniqueIdentifier(x,y-1, processingImage);}
+		if(y < processingImage.getHeight()-1){returnValue += getUniqueIdentifier(x,y+1, processingImage);}
 		
 		return returnValue + Math.sin(x) + Math.cos(y);
 	}
