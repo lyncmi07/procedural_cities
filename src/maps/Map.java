@@ -10,10 +10,17 @@ import java.awt.Graphics;
  *
  */
 public abstract class Map {
-	protected BufferedImage map;
+	//protected BufferedImage map;
+	protected BufferedImage[] generatedMaps;
+	protected BufferedImage stitchedMap;
 	
 	
 	//protected abstract BufferedImage generateMap(int width, int height, int zoomLevel, int xOffset, int yOffset, float zOffset);
+	
+	public Map()
+	{
+		generatedMaps = new BufferedImage[9];
+	}
 	
 	/**
 	 * 
@@ -21,6 +28,6 @@ public abstract class Map {
 	 */
 	public BufferedImage getMap()
 	{
-		return map;
+		return stitchedMap;
 	}
 }

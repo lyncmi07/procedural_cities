@@ -1,15 +1,19 @@
 package maps;
 
+import imageprocessing.AddImage;
 import imageprocessing.Filters;
 
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+
+import proceduralgeneration.GeneratedImages;
 
 /**
  * A type of map that holds data on the whether an area of land is above or below the water
  * @author michael
  *
  */
-public class LandSeaMap extends Map{
+public class LandSeaMap extends BinaryMap{
 	
 	/**
 	 * Creates a map of land as white and sea as black
@@ -17,6 +21,6 @@ public class LandSeaMap extends Map{
 	 * @param cutoffValue	sea level
 	 */
 	public LandSeaMap(TerrainMap terrainMap, int cutoffValue) {
-		map = Filters.binaryMapping(terrainMap.getMap(), cutoffValue);
+		stitchedMap = Filters.binaryMapping(terrainMap.getMap(), cutoffValue);
 	}
 }

@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import proceduralgeneration.GeneratedImages;
+import imageprocessing.AddImage;
 import imageprocessing.BooleanOperators;
 import imageprocessing.Filters;
 
@@ -12,7 +13,7 @@ import imageprocessing.Filters;
  * @author michael
  *
  */
-public class CitiesMap extends Map{
+public class CitiesMap extends BinaryMap{
 	
 	/**
 	 * Creates a map of cities as white
@@ -23,13 +24,85 @@ public class CitiesMap extends Map{
 	 * @param cutoffValue	city sizes
 	 */
 	public CitiesMap(int xOffset, int yOffset, float zOffset, LandSeaMap landSeaMap, int cutoffValue)
-	{
-		BufferedImage fullCityMap = GeneratedImages.generateCombinationTerrainImage(400, 400, xOffset, yOffset, 7, zOffset);
+	{	
+		super();
 		
-		BufferedImage croppedFullCityMap = new BufferedImage(256, 256, fullCityMap.getType());
-		Graphics g = croppedFullCityMap.getGraphics();
-		g.drawImage(fullCityMap, 0, 0, 256, 256, 72, 72, 328, 328, null);
+		BufferedImage mapImage = GeneratedImages.generateCombinationTerrainImage(400, 400, xOffset, yOffset, 7, zOffset);
 		
-		map = Filters.binaryMapping(BooleanOperators.and(landSeaMap.getMap(), croppedFullCityMap), cutoffValue);
+		BufferedImage croppedMap = new BufferedImage(256, 256, mapImage.getType());
+		Graphics g = croppedMap.getGraphics();
+		g.drawImage(mapImage, 0, 0, 256, 256, 72, 72, 328, 328, null);
+		generatedMaps[4] = croppedMap;
+		
+		mapImage = GeneratedImages.generateCombinationTerrainImage(400, 400, xOffset-2, yOffset-2, 7, zOffset);
+		croppedMap = new BufferedImage(256, 256, mapImage.getType());
+		g = croppedMap.getGraphics();
+		g.drawImage(mapImage, 0, 0, 256, 256, 72, 72, 328, 328, null);
+		generatedMaps[0] = croppedMap;
+		
+		mapImage = GeneratedImages.generateCombinationTerrainImage(400, 400, xOffset, yOffset-2, 7, zOffset);
+		croppedMap = new BufferedImage(256, 256, mapImage.getType());
+		g = croppedMap.getGraphics();
+		g.drawImage(mapImage, 0, 0, 256, 256, 72, 72, 328, 328, null);
+		generatedMaps[1] = croppedMap;
+		
+		mapImage = GeneratedImages.generateCombinationTerrainImage(400, 400, xOffset+2, yOffset-2, 7, zOffset);
+		croppedMap = new BufferedImage(256, 256, mapImage.getType());
+		g = croppedMap.getGraphics();
+		g.drawImage(mapImage, 0, 0, 256, 256, 72, 72, 328, 328, null);
+		generatedMaps[2] = croppedMap;
+		
+		mapImage = GeneratedImages.generateCombinationTerrainImage(400, 400, xOffset-2, yOffset, 7, zOffset);
+		croppedMap = new BufferedImage(256, 256, mapImage.getType());
+		g = croppedMap.getGraphics();
+		g.drawImage(mapImage, 0, 0, 256, 256, 72, 72, 328, 328, null);
+		generatedMaps[3] = croppedMap;
+		
+		mapImage = GeneratedImages.generateCombinationTerrainImage(400, 400, xOffset+2, yOffset, 7, zOffset);
+		croppedMap = new BufferedImage(256, 256, mapImage.getType());
+		g = croppedMap.getGraphics();
+		g.drawImage(mapImage, 0, 0, 256, 256, 72, 72, 328, 328, null);
+		generatedMaps[5] = croppedMap;
+		
+		mapImage = GeneratedImages.generateCombinationTerrainImage(400, 400, xOffset-2, yOffset+2, 7, zOffset);
+		croppedMap = new BufferedImage(256, 256, mapImage.getType());
+		g = croppedMap.getGraphics();
+		g.drawImage(mapImage, 0, 0, 256, 256, 72, 72, 328, 328, null);
+		generatedMaps[6] = croppedMap;
+		
+		mapImage = GeneratedImages.generateCombinationTerrainImage(400, 400, xOffset, yOffset+2, 7, zOffset);
+		croppedMap = new BufferedImage(256, 256, mapImage.getType());
+		g = croppedMap.getGraphics();
+		g.drawImage(mapImage, 0, 0, 256, 256, 72, 72, 328, 328, null);
+		generatedMaps[7] = croppedMap;
+		
+		mapImage = GeneratedImages.generateCombinationTerrainImage(400, 400, xOffset+2, yOffset+2, 7, zOffset);
+		croppedMap = new BufferedImage(256, 256, mapImage.getType());
+		g = croppedMap.getGraphics();
+		g.drawImage(mapImage, 0, 0, 256, 256, 72, 72, 328, 328, null);
+		generatedMaps[8] = croppedMap;
+		
+		//map = croppedMap;
+		stitchedMap = AddImage.tileX(
+						AddImage.tileX(
+							generatedMaps[0], 
+							generatedMaps[1]),
+							generatedMaps[2]);
+		stitchedMap = AddImage.tileY(
+						stitchedMap,
+						AddImage.tileX(
+							AddImage.tileX(
+								generatedMaps[3],
+								generatedMaps[4]),
+							generatedMaps[5]));
+		stitchedMap = AddImage.tileY(
+						stitchedMap,
+						AddImage.tileX(
+							AddImage.tileX(
+								generatedMaps[6],
+								generatedMaps[7]),
+							generatedMaps[8]));
+		
+		stitchedMap = Filters.binaryMapping(BooleanOperators.and(landSeaMap.getMap(), stitchedMap), cutoffValue);
 	}
 }
