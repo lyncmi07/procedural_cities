@@ -6,12 +6,8 @@ public class CityNames {
 			{
 				"New",
 				"",
-				"Klagen",
 				"South",
 				"North",
-				"Los",
-				"Las",
-				"San",
 				"Victor",
 				"Fort"
 			};
@@ -26,19 +22,12 @@ public class CityNames {
 				"London",
 				"Yorkshire",
 				"Rotterdam",
-				"#furt",
-				"Nancy",
-				"Reims",
-				"Paris",
-				"#burg",
-				"#grad",
 				"Quays",
 				"Keil",
 				"City",
 				"Orleans",
 				"land",
 				"Victoria",
-				"#bank",
 				"Anchorage"
 			};
 			
@@ -46,6 +35,9 @@ public class CityNames {
 	{
 		long cityID_first16 = (cityID & 0xFFFF) % cityName1.length;
 		long cityID_second16 = (cityID & 0xFFFF0000) % cityName2.length;
+		
+		cityID_first16 = (int)Math.sqrt(cityID_first16*cityID_first16);
+		cityID_second16 = (int)Math.sqrt(cityID_second16 * cityID_second16);
 		
 		if(cityName1[(int)cityID_first16].length() == 0)
 		{

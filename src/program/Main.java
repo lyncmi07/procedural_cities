@@ -1,5 +1,9 @@
 package program;
 
+import java.awt.image.BufferedImage;
+
+import proceduralgeneration.RoadGeneration;
+import imageprocessing.Filters;
 import maps.CitiesMap;
 import maps.CityAttractionsMap;
 import maps.CityGreenSpaceMap;
@@ -39,11 +43,18 @@ public class Main {
 		debug.MapDebug.printMapToScreen(wealthMap);
 		debug.MapDebug.printMapToScreen(zoningMap);*/
 		
-		FullMap fullMap = new FullMap(0, 1, 0);
+		FullMap fullMap = new FullMap(5877, 5787, 0);
 		
-		debug.MapDebug.printMapToScreen(fullMap.getLandSeaMap());
-		debug.MapDebug.printMapToScreen(fullMap.getCitiesMap());
+		BufferedImage zoneBasedRoads = Filters.edgeDetection(fullMap.getZoningMap().getMap(), 5, 3, 7);
+		//BufferedImage greenSpaceBasedRoads = Filters.lineThicken(Filters.edgeDetection(fullMap.getCityGreenSpaceMap().getMap(), 5, 3, 7));
+		//BufferedImage LandBasedRoads = Filters.lineThicken(Filters.edgeDetection(fullMap.getLandSeaMap().getMap(), 5, 3, 7));
 		
-		System.out.println(fullMap.getPixelRundown(380, 380));
+		zoneBasedRoads = RoadGeneration.getRoadPoints(zoneBasedRoads);
+		
+		debug.ImageDebug.printImageToScreen(zoneBasedRoads);
+		//debug.ImageDebug.printImageToScreen(greenSpaceBasedRoads);
+		//debug.ImageDebug.printImageToScreen(LandBasedRoads);
+		
+		System.out.println(fullMap.getPixelRundown(-150, 40));
 	}
 }
