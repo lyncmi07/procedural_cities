@@ -2,6 +2,7 @@ package program;
 
 import java.awt.image.BufferedImage;
 
+import proceduralgeneration.RoadData;
 import proceduralgeneration.RoadGeneration;
 import imageprocessing.Filters;
 import maps.CitiesMap;
@@ -46,12 +47,28 @@ public class Main {
 		FullMap fullMap = new FullMap(5877, 5787, 0);
 		
 		BufferedImage zoneBasedRoads = Filters.edgeDetection(fullMap.getZoningMap().getMap(), 5, 3, 7);
-		//BufferedImage greenSpaceBasedRoads = Filters.lineThicken(Filters.edgeDetection(fullMap.getCityGreenSpaceMap().getMap(), 5, 3, 7));
-		//BufferedImage LandBasedRoads = Filters.lineThicken(Filters.edgeDetection(fullMap.getLandSeaMap().getMap(), 5, 3, 7));
+		BufferedImage greenSpaceBasedRoads = Filters.lineThicken(Filters.edgeDetection(fullMap.getCityGreenSpaceMap().getMap(), 5, 3, 7));
+		BufferedImage LandBasedRoads = Filters.lineThicken(Filters.edgeDetection(fullMap.getLandSeaMap().getMap(), 5, 3, 7));
 		
-		zoneBasedRoads = RoadGeneration.getRoadPoints(zoneBasedRoads);
+		RoadData dataSet = RoadGeneration.getRoadPoints(zoneBasedRoads);
+		BufferedImage roadPointsMap = RoadGeneration.getRoadPointsImage(dataSet);
+		BufferedImage joinedPointsMap = RoadGeneration.getJoinedRoadPoints(dataSet);
+		
+		RoadData dataSet2 = RoadGeneration.getRoadPoints(greenSpaceBasedRoads);
+		BufferedImage roadPointsMap2 = RoadGeneration.getRoadPointsImage(dataSet2);
+		BufferedImage joinedPointsMap2 = RoadGeneration.getJoinedRoadPoints(dataSet2);
+		
+		RoadData dataSet3 = RoadGeneration.getRoadPoints(LandBasedRoads);
+		BufferedImage roadPointsMap3= RoadGeneration.getRoadPointsImage(dataSet3);
+		BufferedImage joinedPointsMap3 = RoadGeneration.getJoinedRoadPoints(dataSet3);
 		
 		debug.ImageDebug.printImageToScreen(zoneBasedRoads);
+		debug.ImageDebug.printImageToScreen(roadPointsMap);
+		debug.ImageDebug.printImageToScreen(joinedPointsMap);
+		debug.ImageDebug.printImageToScreen(roadPointsMap2);
+		debug.ImageDebug.printImageToScreen(joinedPointsMap2);
+		debug.ImageDebug.printImageToScreen(roadPointsMap3);
+		debug.ImageDebug.printImageToScreen(joinedPointsMap3);
 		//debug.ImageDebug.printImageToScreen(greenSpaceBasedRoads);
 		//debug.ImageDebug.printImageToScreen(LandBasedRoads);
 		
