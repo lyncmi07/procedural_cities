@@ -49,6 +49,8 @@ public class Main {
 		debug.MapDebug.printMapToScreen(zoningMap);*/
 		System.out.println("0%");
 		FullMap fullMap = new FullMap(1991, 3994, 0);
+		fullMap.goNorth();
+		fullMap.goWest();
 		
 		System.out.println("50%");
 		BufferedImage zoneBasedRoads = Filters.lineThicken(Filters.edgeDetection(fullMap.getZoningMap().getMap(), 5, 3, 7), (0 << 16) | (0 << 8) | (0));

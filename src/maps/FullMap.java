@@ -45,6 +45,27 @@ public class FullMap {
 		return zoningMap;
 	}
 	
+	public void goNorth()
+	{
+		terrainMap.moveMapUp();
+		landSeaMap.regenerate(terrainMap, 180);
+	}
+	public void goEast()
+	{
+		terrainMap.moveMapRight();
+		landSeaMap.regenerate(terrainMap, 180);
+	}
+	public void goSouth()
+	{
+		terrainMap.moveMapDown();
+		landSeaMap.regenerate(terrainMap, 180);
+	}
+	public void goWest()
+	{
+		terrainMap.moveMapLeft();
+		landSeaMap.regenerate(terrainMap, 180);
+	}
+	
 	public String getPixelRundown(int x, int y)
 	{
 		x = x + 384;

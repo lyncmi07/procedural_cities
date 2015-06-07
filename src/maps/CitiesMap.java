@@ -105,4 +105,28 @@ public class CitiesMap extends UniquelyIdentifiableBinaryMap{
 		
 		stitchedMap = Filters.binaryMapping(BooleanOperators.and(landSeaMap.getMap(), stitchedMap), cutoffValue);
 	}
+
+	@Override
+	public void moveMapLeft() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void moveMapRight() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void moveMapUp() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void moveMapDown() {
+		// TODO Auto-generated method stub
+		
+	}
 }

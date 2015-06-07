@@ -14,6 +14,10 @@ public abstract class Map {
 	protected BufferedImage[] generatedMaps;
 	protected BufferedImage stitchedMap;
 	
+	protected int xPosition;
+	protected int yPosition;
+	protected float zPosition;
+	
 	
 	//protected abstract BufferedImage generateMap(int width, int height, int zoomLevel, int xOffset, int yOffset, float zOffset);
 	
@@ -30,4 +34,9 @@ public abstract class Map {
 	{
 		return stitchedMap;
 	}
+	
+	public abstract void moveMapLeft();
+	public abstract void moveMapRight();
+	public abstract void moveMapUp();
+	public abstract void moveMapDown();
 }

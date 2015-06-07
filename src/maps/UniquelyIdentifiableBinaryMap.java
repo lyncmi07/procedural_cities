@@ -2,7 +2,7 @@ package maps;
 
 import java.awt.image.BufferedImage;
 
-public class UniquelyIdentifiableBinaryMap extends BinaryMap{
+public abstract class UniquelyIdentifiableBinaryMap extends BinaryMap{
 	public long getIDAtCoord(int x, int y)
 	{
 		boolean isInArea = getValueAtCoord(x, y);

@@ -23,4 +23,29 @@ public class LandSeaMap extends BinaryMap{
 	public LandSeaMap(TerrainMap terrainMap, int cutoffValue) {
 		stitchedMap = Filters.binaryMapping(terrainMap.getMap(), cutoffValue);
 	}
+	
+	public void regenerate(TerrainMap terrainMap, int cutoffValue)
+	{
+		stitchedMap = Filters.binaryMapping(terrainMap.getMap(), cutoffValue);
+	}
+
+	@Override
+	public void moveMapLeft() {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void moveMapRight() {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void moveMapUp() {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void moveMapDown() {
+		// TODO Auto-generated method stub
+	}
 }

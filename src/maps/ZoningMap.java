@@ -108,4 +108,28 @@ public class ZoningMap extends TerneryMap{
 		
 		stitchedMap = BooleanOperators.and(citiesMap.getMap(), Filters.tripleMapping(stitchedMap, cutoffValue1, cutoffValue2));
 	}
+
+	@Override
+	public void moveMapLeft() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void moveMapRight() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void moveMapUp() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void moveMapDown() {
+		// TODO Auto-generated method stub
+		
+	}
 }

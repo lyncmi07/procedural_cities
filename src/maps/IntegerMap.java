@@ -1,6 +1,6 @@
 package maps;
 
-public class IntegerMap extends Map{
+public abstract class IntegerMap extends Map{
 	public int getValueAtCoord(int x, int y)
 	{
 		int pixel = stitchedMap.getRGB(x, y);
