@@ -115,4 +115,36 @@ public class AddImage {
 		
 		return newImage;
 	}
+	
+	/**
+	 * Adds image2 over the top of image1 where image2 is not black
+	 * @param image1
+	 * @param image2
+	 * @return
+	 */
+	public static BufferedImage blanketAdd(BufferedImage image1, BufferedImage image2)
+	{
+		int emptyColour = (0 << 16) | (0 << 8) | (0);
+		int width = image1.getWidth();
+		int height = image1.getHeight();
+		BufferedImage newImage = new BufferedImage(width, height,
+				BufferedImage.TYPE_INT_RGB);
+
+		for (int i = 0; i < width; i++) {
+			for (int a = 0; a < height; a++) {
+				int pixel = image1.getRGB(i, a);
+				int pixel2 = image2.getRGB(i, a);
+				if((pixel2 & 0x000000FF) == (emptyColour & 0x000000FF) && (pixel2 & 0x0000FF00) == (emptyColour & 0x0000FF00) && (pixel2 & 0x00FF0000) == (emptyColour & 0x00FF0000))
+				{
+					newImage.setRGB(i, a, pixel);
+				}
+				else
+				{
+					newImage.setRGB(i, a, pixel2);
+				}
+			}
+		}
+		
+		return newImage;
+	}
 }

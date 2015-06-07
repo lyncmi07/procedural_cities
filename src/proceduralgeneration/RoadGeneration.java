@@ -157,7 +157,7 @@ public class RoadGeneration {
 				}
 			}
 			
-			System.out.println(i + " " + currentPoint);
+			//System.out.println(i + " " + currentPoint);
 			g.drawLine(dataSet.getDataPoint(i).getXValue(), dataSet.getDataPoint(i).getYValue(), dataSet.getDataPoint(currentPoint).getXValue(), dataSet.getDataPoint(currentPoint).getYValue());
 		}
 		

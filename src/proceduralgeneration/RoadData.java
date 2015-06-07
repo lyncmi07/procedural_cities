@@ -15,6 +15,11 @@ public class RoadData {
 		points.add(new RoadDataPoint(x,y));
 	}
 	
+	public void addDataSet(RoadData otherData)
+	{
+		points.addAll(otherData.getAllData());
+	}
+	
 	public RoadDataPoint getDataPoint(int index)
 	{
 		return points.get(index);
@@ -30,6 +35,10 @@ public class RoadData {
 	public int getNumberOfPoints()
 	{
 		return points.size();
+	}
+	public List<RoadDataPoint> getAllData()
+	{
+		return points;
 	}
 	
 	public RoadData(int imageWidth, int imageHeight)

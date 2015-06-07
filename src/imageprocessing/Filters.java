@@ -326,9 +326,12 @@ public class Filters {
 		return isPath;
 	}
 	
-	public static BufferedImage lineThicken(BufferedImage image) {
+	public static BufferedImage lineThicken(BufferedImage image, int thickeningColour) {
 		int width = image.getWidth();
 		int height = image.getHeight();
+		
+		int thickeningShade = thickeningColour & 0x000000FF;
+		
 		BufferedImage newImage = new BufferedImage(width, height,
 				BufferedImage.TYPE_INT_RGB);
 
@@ -338,15 +341,15 @@ public class Filters {
 
 				int r = ((pixel >> 16) & 0x000000FF);
 
-				if (r == 0 && i > 0 && i < width - 1 && a > 0 && a < height - 1) {
-					newImage.setRGB(i - 1, a - 1, 0);
-					newImage.setRGB(i - 1, a, 0);
-					newImage.setRGB(i - 1, a + 1, 0);
-					newImage.setRGB(i, a - 1, 0);
-					newImage.setRGB(i, a + 1, 0);
-					newImage.setRGB(i + 1, a - 1, 0);
-					newImage.setRGB(i + 1, a, 0);
-					newImage.setRGB(i + 1, a + 1, 0);
+				if (r == thickeningShade && i > 0 && i < width - 1 && a > 0 && a < height - 1) {
+					newImage.setRGB(i - 1, a - 1, thickeningColour);
+					newImage.setRGB(i - 1, a, thickeningColour);
+					newImage.setRGB(i - 1, a + 1, thickeningColour);
+					newImage.setRGB(i, a - 1, thickeningColour);
+					newImage.setRGB(i, a + 1, thickeningColour);
+					newImage.setRGB(i + 1, a - 1, thickeningColour);
+					newImage.setRGB(i + 1, a, thickeningColour);
+					newImage.setRGB(i + 1, a + 1, thickeningColour);
 
 				}
 				newImage.setRGB(i, a, pixel);
