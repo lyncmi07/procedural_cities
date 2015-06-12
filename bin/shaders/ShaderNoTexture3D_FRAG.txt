@@ -1,0 +1,12 @@
+//#version 400 core //(windows)
+#version 130 //(linux)
+
+in vec3 position_pass;
+
+out vec4 out_Color;
+
+
+void main(void)
+{
+	out_Color = vec4(position_pass, 1.0);
+}

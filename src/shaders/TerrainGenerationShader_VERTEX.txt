@@ -1,0 +1,18 @@
+//#version 400 core //(windows)
+#version 130 //(linux)
+
+in vec3 position;
+in vec2 textureCoords;
+
+out vec3 position_pass;
+
+uniform mat4 transformationMatrix;
+uniform mat4 projectionMatrix;
+uniform mat4 viewMatrix;
+
+void main(void)
+{
+	vec4 textureCreationPositions = projectionMatrix * viewMatrix * transformationMatrix * vec4(position, 1.0);
+	gl_Position = vec4(position, 1.0);
+	position_pass = vec3(textureCreationPositions.x, textureCreationPositions.y, textureCreationPositions.z);
+}

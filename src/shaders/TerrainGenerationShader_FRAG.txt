@@ -1,0 +1,56 @@
+//#version 400 core //(windows)
+#version 130 //(linux)
+
+in vec3 position_pass;
+
+out vec4 out_Color;
+
+
+float getOutputShade(float x, float y, float z)
+{
+	float shade = tan(x*0.1) * tan(2*y) * sin(4*x) / cos(8.3*x) / cos(2.5*y) +  sin(4.2*x) * tan(2.6*x) + tan(y+x);
+	shade = 0.5*(sin(shade + z)+1);
+	return shade;
+}
+
+float getScalePass(float divisionNumber)
+{
+	float x = gl_FragCoord.x;
+	float y = gl_FragCoord.y;
+	float z = position_pass.z;
+	float xRem = mod(x,divisionNumber);
+	float yRem = mod(y,divisionNumber);
+	float x1 = floor(x/divisionNumber)*divisionNumber;
+	float y1 = floor(y/divisionNumber)*divisionNumber;
+	float x2 = x1 + divisionNumber;
+	float y2 = y1 + divisionNumber;
+	float q11 = getOutputShade(x1,y1,z);
+	float q12 = getOutputShade(x1,y2,z);
+	float q21 = getOutputShade(x2,y1,z);
+	float q22 = getOutputShade(x2,y2,z);
+
+	float fx1 = ((x2 - x)/(x2 - x1) * q11) + 
+				((x - x1)/(x2 - x1) * q21);
+				
+	float fx2 = ((x2 - x)/(x2 - x1) * q12) + 
+				((x - x1)/(x2 - x1) * q22);
+				
+	float fxy = ((y2 - y)/(y2 - y1) * fx1) +
+				((y - y1)/(y2 - y1) * fx2);
+
+	return fxy;
+}
+
+void main(void)
+{
+	float outputShade = getScalePass(64) + 
+						((getScalePass(32) / 2)-(0.25)) +
+						((getScalePass(16) / 4)-(0.125));
+	outputShade += 	((getScalePass(8) / 8)-(0.0625))+
+					((getScalePass(4) / 16)-(0.03125))+
+					((getScalePass(2) / 32)-(0.015625))+
+					((getScalePass(1) / 64)-(0.0078125));
+
+	out_Color = vec4(outputShade, outputShade, outputShade, 1.0);
+
+}
