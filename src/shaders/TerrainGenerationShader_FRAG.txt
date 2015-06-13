@@ -15,8 +15,8 @@ float getOutputShade(float x, float y, float z)
 
 float getScalePass(float divisionNumber)
 {
-	float x = gl_FragCoord.x;
-	float y = gl_FragCoord.y;
+	float x = gl_FragCoord.x + position_pass.x;
+	float y = gl_FragCoord.y + position_pass.y;
 	float z = position_pass.z;
 	float xRem = mod(x,divisionNumber);
 	float yRem = mod(y,divisionNumber);
@@ -41,15 +41,31 @@ float getScalePass(float divisionNumber)
 	return fxy;
 }
 
+float getTrigGenerationImage(int passes)
+{
+	float outputShade = getScalePass(pow(2,passes));
+	for(int i = passes-1; i >= 0; i--)
+	{
+		outputShade += (((getScalePass(pow(2, i)))
+							/ (pow(2,passes) * (1 / pow(2,i))))
+								- (pow(2.0,i)/pow(2.0,passes+1)));
+	}
+	
+	/*if(outputShade > 0.5)	//for land sea map
+	{
+		return 1.0;
+	}
+	else
+	{
+		return 0.0;
+	}*/		
+	
+	return outputShade;
+}
+
 void main(void)
 {
-	float outputShade = getScalePass(64) + 
-						((getScalePass(32) / 2)-(0.25)) +
-						((getScalePass(16) / 4)-(0.125));
-	outputShade += 	((getScalePass(8) / 8)-(0.0625))+
-					((getScalePass(4) / 16)-(0.03125))+
-					((getScalePass(2) / 32)-(0.015625))+
-					((getScalePass(1) / 64)-(0.0078125));
+	float outputShade = getTrigGenerationImage(6);
 
 	out_Color = vec4(outputShade, outputShade, outputShade, 1.0);
 

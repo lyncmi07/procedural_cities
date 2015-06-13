@@ -76,6 +76,7 @@ public class Main {
 		{
 			//update model transforms
 			camera.move();
+			testEntity.increasePosition(1, 1, 0);
 			
 			renderer.prepare();
 			shader.start();

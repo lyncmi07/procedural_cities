@@ -12,7 +12,7 @@ uniform mat4 viewMatrix;
 
 void main(void)
 {
-	vec4 textureCreationPositions = projectionMatrix * viewMatrix * transformationMatrix * vec4(position, 1.0);
+	vec4 textureCreationPositions = viewMatrix * transformationMatrix * vec4(position, 1.0);
 	gl_Position = vec4(position, 1.0);
 	position_pass = vec3(textureCreationPositions.x, textureCreationPositions.y, textureCreationPositions.z);
 }
