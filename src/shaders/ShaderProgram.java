@@ -20,6 +20,7 @@ public abstract class ShaderProgram {
 	
 	public ShaderProgram(String vertexFile, String fragmentFile)
 	{
+		//load up and compile the shaders for use
 		vertexShaderID = loadShader(vertexFile, GL20.GL_VERTEX_SHADER);
 		fragmentShaderID = loadShader(fragmentFile, GL20.GL_FRAGMENT_SHADER);
 		programID = GL20.glCreateProgram();
@@ -32,16 +33,23 @@ public abstract class ShaderProgram {
 		getAllUniformLocations();
 	}
 	
+	protected void loadInt(int location, int value)
+	{
+		GL20.glUniform1i(location, value);
+	}
 	protected void loadFloat(int location, float value)
 	{
+		//load a float variable into the shader
 		GL20.glUniform1f(location, value);
 	}
 	protected void loadVector3(int location, Vector3f vector)
 	{
+		//load a vector3 variable into the shader
 		GL20.glUniform3f(location, vector.x, vector.y, vector.z);
 	}
 	protected void loadBoolean(int location , boolean value)
 	{
+		//load a boolean variable into the shader
 		float toLoad = 0;
 		if(value)
 		{
@@ -52,6 +60,7 @@ public abstract class ShaderProgram {
 	}
 	protected void loadMatrix(int location ,Matrix4f matrix)
 	{
+		//load a matrix variable into the shader
 		matrix.store(matrixBuffer);
 		matrixBuffer.flip();
 		
@@ -62,6 +71,7 @@ public abstract class ShaderProgram {
 	
 	protected int getUniformLocation(String uniformName)
 	{
+		//gets the id of a uniform variable in preparation for loading data into it
 		return GL20.glGetUniformLocation(programID,uniformName);
 	}
 	

@@ -5,15 +5,22 @@ in vec3 position_pass;
 
 out vec4 out_Color;
 
+uniform float mapType;
+uniform int iterationNumber;
+uniform float firstCutoff;
+uniform float secondCutoff;
 
-float getOutputShade(float x, float y, float z)
+
+float getOutputShade(float x, float y, float z, int passNumber)
 {
-	float shade = tan(x*0.1) * tan(2*y) * sin(4*x) / cos(8.3*x) / cos(2.5*y) +  sin(4.2*x) * tan(2.6*x) + tan(y+x);
-	shade = 0.5*(sin(shade + z)+1);
+	float shade = tan(x*0.1) * tan(2*y) * sin(4*x) / cos(8.3*x) / cos(2.5*y) +  sin(4.2*x) * tan(2.6*x) + tan(y+x) + (tan(passNumber)+sin(passNumber)/cos(passNumber)*z*0.1);
+	//float shade = tan(x) / tan(y+x) + z*z;
+	shade = 0.5*(sin(shade)+1);
+	//shade = 255/ shade;
 	return shade;
 }
 
-float getScalePass(float divisionNumber)
+float getScalePass(float divisionNumber, int passNumber)
 {
 	float x = gl_FragCoord.x + position_pass.x;
 	float y = gl_FragCoord.y + position_pass.y;
@@ -24,10 +31,10 @@ float getScalePass(float divisionNumber)
 	float y1 = floor(y/divisionNumber)*divisionNumber;
 	float x2 = x1 + divisionNumber;
 	float y2 = y1 + divisionNumber;
-	float q11 = getOutputShade(x1,y1,z);
-	float q12 = getOutputShade(x1,y2,z);
-	float q21 = getOutputShade(x2,y1,z);
-	float q22 = getOutputShade(x2,y2,z);
+	float q11 = getOutputShade(x1,y1,z, passNumber);
+	float q12 = getOutputShade(x1,y2,z, passNumber);
+	float q21 = getOutputShade(x2,y1,z, passNumber);
+	float q22 = getOutputShade(x2,y2,z,passNumber);
 
 	float fx1 = ((x2 - x)/(x2 - x1) * q11) + 
 				((x - x1)/(x2 - x1) * q21);
@@ -43,10 +50,10 @@ float getScalePass(float divisionNumber)
 
 float getTrigGenerationImage(int passes)
 {
-	float outputShade = getScalePass(pow(2,passes));
+	float outputShade = getScalePass(pow(2,passes), passes);
 	for(int i = passes-1; i >= 0; i--)
 	{
-		outputShade += (((getScalePass(pow(2, i)))
+		outputShade += (((getScalePass(pow(2, i), i))
 							/ (pow(2,passes) * (1 / pow(2,i))))
 								- (pow(2.0,i)/pow(2.0,passes+1)));
 	}
@@ -58,15 +65,55 @@ float getTrigGenerationImage(int passes)
 	else
 	{
 		return 0.0;
-	}*/		
+	}*/
 	
 	return outputShade;
 }
 
+
+vec4 applyMapType(float inputShade)
+{
+	if(mapType < 0.5)
+	{
+		//mapType = 0
+		return vec4(inputShade, inputShade, inputShade, 1.0);
+	}
+	else if(mapType < 1.5)
+	{
+		//mapType = 1	binary map
+		if(inputShade < firstCutoff)
+		{
+			return vec4(0.0,0.0,0.0,1.0);
+		}
+		else
+		{
+			return vec4(1.0,1.0,1.0,1.0);
+		}
+	}
+	else
+	{
+		//mapType = 2 ternery map
+		if(inputShade < firstCutoff)
+		{
+			return vec4(1.0,0.0,0.0,1.0);
+		}
+		else if(inputShade < secondCutoff)
+		{
+			return vec4(0.0,1.0,0.0,1.0);
+		}
+		else
+		{
+			return vec4(0.0,0.0,1.0,1.0);
+		}
+	}
+}
+
 void main(void)
 {
-	float outputShade = getTrigGenerationImage(6);
+	float outputShade = getTrigGenerationImage(iterationNumber);
+	//float outputShade = mapType;
 
-	out_Color = vec4(outputShade, outputShade, outputShade, 1.0);
+	out_Color = applyMapType(outputShade);
+	//out_Color = vec4(outputShade, outputShade, outputShade, 1.0);
 
 }

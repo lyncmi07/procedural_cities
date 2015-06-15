@@ -45,10 +45,17 @@ public class Main {
 	{
 		DisplayManager.createDisplay();
 		
-		Shader3D shader = new TerrainGenerationShader();
+		TerrainGenerationShader shader = new TerrainGenerationShader(TerrainGenerationShader.BINARY_MAP_IMAGE);
 		
 		Renderer renderer = new Renderer();
 		renderer.loadProjectionMatrixToShader(shader);
+		
+		shader.start();
+		shader.loadMapType(2);
+		shader.loadIterationNumber(5);
+		shader.loadFirstCutoff(0.33f);
+		shader.loadSecondCutoff(0.66f);
+		shader.stop();
 		
 		float[] vertices = 
 			{
@@ -76,7 +83,7 @@ public class Main {
 		{
 			//update model transforms
 			camera.move();
-			testEntity.increasePosition(1, 1, 0);
+			//testEntity.increasePosition(1, 1, 0);
 			
 			renderer.prepare();
 			shader.start();

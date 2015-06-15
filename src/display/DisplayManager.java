@@ -25,7 +25,7 @@ public class DisplayManager {
 		}
 		
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
-		GL11.glViewport(0, 0, 256, 256);
+		GL11.glViewport(0, 0, 768, 768);
 	}
 	
 	public static void updateDisplay()
