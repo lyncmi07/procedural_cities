@@ -50,10 +50,10 @@ float getScalePass(float divisionNumber, int passNumber)
 
 float getTrigGenerationImage(int passes)
 {
-	float outputShade = getScalePass(pow(2,passes), passes);
+	float outputShade = getScalePass(pow(2,passes), 0);
 	for(int i = passes-1; i >= 0; i--)
 	{
-		outputShade += (((getScalePass(pow(2, i), i))
+		outputShade += (((getScalePass(pow(2, i), passes - i))
 							/ (pow(2,passes) * (1 / pow(2,i))))
 								- (pow(2.0,i)/pow(2.0,passes+1)));
 	}

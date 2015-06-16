@@ -1,8 +1,14 @@
 package program;
 
 import java.awt.image.BufferedImage;
+import java.nio.FloatBuffer;
 
+import org.lwjgl.BufferUtils;
+import org.lwjgl.LWJGLException;
+import org.lwjgl.opengl.ContextAttribs;
 import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.PixelFormat;
 import org.lwjgl.util.vector.Vector3f;
 
 import display.DisplayManager;
@@ -18,16 +24,13 @@ import imageprocessing.AddImage;
 import imageprocessing.BooleanOperators;
 import imageprocessing.Channel;
 import imageprocessing.Filters;
-import maps.CitiesMap;
-import maps.CityAttractionsMap;
-import maps.CityGreenSpaceMap;
-import maps.FullMap;
-import maps.LandSeaMap;
-import maps.TerrainMap;
-import maps.WealthMap;
-import maps.ZoningMap;
+import mapsgpu.CityAttractionsMap;
+import mapsgpu.LandSeaMap;
+import mapsgpu.Map;
+import mapsgpu.TerrainMap;
 import models.Camera;
 import models.Entity;
+import models.TerrainModel;
 import models.VAOModel;
 
 /**
@@ -40,22 +43,17 @@ public class Main {
 	/**
 	 * Program starts with this function
 	 * @param args
+	 * @throws LWJGLException 
 	 */
-	public static void main(String[] args)
+	public static void main(String[] args) throws LWJGLException
 	{
 		DisplayManager.createDisplay();
 		
-		TerrainGenerationShader shader = new TerrainGenerationShader(TerrainGenerationShader.BINARY_MAP_IMAGE);
+		ShaderNoTexture3D shader = new ShaderNoTexture3D();
 		
 		Renderer renderer = new Renderer();
 		renderer.loadProjectionMatrixToShader(shader);
 		
-		shader.start();
-		shader.loadMapType(2);
-		shader.loadIterationNumber(5);
-		shader.loadFirstCutoff(0.33f);
-		shader.loadSecondCutoff(0.66f);
-		shader.stop();
 		
 		float[] vertices = 
 			{
@@ -77,10 +75,59 @@ public class Main {
 								new Vector3f(1,1,1)
 								);
 		
-		Camera camera = new Camera(new Vector3f(0,0,0), new Vector3f(0,0,0));
+		Camera camera = new Camera(new Vector3f(5,200,500), new Vector3f(0,90,45));
 		
+		
+		Map map = new TerrainMap(0,0,0);
+		//debug.ImageDebug.printImageToScreen(map.getMapImage());
+		TerrainModel terrainModel = new TerrainModel(map.getMapImage(), 768);
+		VAOModel terrainVAOModel = new VAOModel(terrainModel.getData(), terrainModel.getIndices());
+		Entity terrainEntity = new Entity(terrainVAOModel, 
+											new Vector3f(10,0,0), 
+											new Vector3f(0,0,0), 
+											new Vector3f(10,10,10));
+		boolean screenshotCollected = false;
+		
+		Vector3f blockPosition = new Vector3f(0,0,0);
+		boolean blockChange = false;
 		while(!Display.isCloseRequested())
 		{
+			
+			//change terrain block
+			if(Math.floor(camera.getPosition().x / 255) > -blockPosition.x)
+			{
+				blockPosition.x -= 1;
+				blockChange = true;
+			}
+			if(Math.floor(camera.getPosition().x / 255) < -blockPosition.x)
+			{
+				blockPosition.x += 1;
+				blockChange = true;
+			}
+			if(Math.floor(camera.getPosition().z / 255) > blockPosition.y)
+			{
+				blockPosition.y += 1;
+				blockChange = true;
+			}
+			if(Math.floor(camera.getPosition().z / 255) < blockPosition.y)
+			{
+				blockPosition.y -= 1;
+				blockChange = true;
+			}
+			if(blockChange)
+			{
+				map.generateNewArea((int)blockPosition.x, (int)blockPosition.y, blockPosition.z);
+				//debug.ImageDebug.printImageToScreen(map.getMapImage());
+				terrainModel = new TerrainModel(map.getMapImage(), 768);
+				terrainVAOModel.destroyModel();
+				terrainVAOModel = new VAOModel(terrainModel.getData(), terrainModel.getIndices());
+				terrainEntity = new Entity(terrainVAOModel, 
+													new Vector3f((-blockPosition.x * 256) - 256,0,(blockPosition.y * 256)-256), 
+													new Vector3f(0,0,0), 
+													new Vector3f(10,10,10));
+				blockChange = false;
+			}
+			
 			//update model transforms
 			camera.move();
 			//testEntity.increasePosition(1, 1, 0);
@@ -88,7 +135,7 @@ public class Main {
 			renderer.prepare();
 			shader.start();
 			shader.loadViewMatrix(camera);
-			renderer.renderModel(testEntity, shader);
+			renderer.renderModel(terrainEntity, shader);
 			shader.stop();
 			
 			DisplayManager.updateDisplay();

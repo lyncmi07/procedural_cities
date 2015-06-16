@@ -17,19 +17,19 @@ public class Camera {
 	{
 		if(Keyboard.isKeyDown(Keyboard.KEY_W))
 		{
-			position.z -= 0.2;
+			position.z -= 1;
 		}
 		if(Keyboard.isKeyDown(Keyboard.KEY_D))
 		{
-			position.x += 0.2;
+			position.x += 1;
 		}
 		if(Keyboard.isKeyDown(Keyboard.KEY_A))
 		{
-			position.x -= 0.2;
+			position.x -= 1;
 		}
 		if(Keyboard.isKeyDown(Keyboard.KEY_S))
 		{
-			position.z += 0.2;
+			position.z += 1;
 		}
 		if(Keyboard.isKeyDown(Keyboard.KEY_Q))
 		{
@@ -39,6 +39,29 @@ public class Camera {
 		{
 			rotation.y += 1;
 		}
+		if(Keyboard.isKeyDown(Keyboard.KEY_Z))
+		{
+			position.y += 1;
+		}
+		if(Keyboard.isKeyDown(Keyboard.KEY_X))
+		{
+			position.y -= 1;
+		}
+		if(Keyboard.isKeyDown(Keyboard.KEY_DOWN))
+		{
+			rotation.z -= 1;
+		}
+		if(Keyboard.isKeyDown(Keyboard.KEY_UP))
+		{
+			rotation.z += 1;
+		}
+	}
+	
+	public void setPosition(float dx, float dy, float dz)
+	{
+		position.x = dx;
+		position.y = dy;
+		position.z = dz;
 	}
 	
 	public Vector3f getPosition()
