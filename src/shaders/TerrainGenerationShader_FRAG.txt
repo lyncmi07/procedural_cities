@@ -13,7 +13,7 @@ uniform float secondCutoff;
 
 float getOutputShade(float x, float y, float z, int passNumber)
 {
-	float shade = tan(x*0.1) * tan(2*y) * sin(4*x) / cos(8.3*x) / cos(2.5*y) +  sin(4.2*x) * tan(2.6*x) + tan(y+x) + (tan(passNumber)+sin(passNumber)/cos(passNumber)*z*0.1);
+	float shade = tan(x*0.1) * tan(2*y) * sin(4*x) / cos(8.3*x) / cos(2.5*y) +  sin(4.2*x) * tan(2.6*x) + tan(y+x) + (tan(1.0*passNumber)+sin(1.0*passNumber)/cos(1.0*passNumber)*z*0.1);
 	//float shade = tan(x) / tan(y+x) + z*z;
 	shade = 0.5*(sin(shade)+1);
 	//shade = 255/ shade;
@@ -50,12 +50,12 @@ float getScalePass(float divisionNumber, int passNumber)
 
 float getTrigGenerationImage(int passes)
 {
-	float outputShade = getScalePass(pow(2,passes), 0);
+	float outputShade = getScalePass(pow(2.0,1.0*passes), 0);
 	for(int i = passes-1; i >= 0; i--)
 	{
-		outputShade += (((getScalePass(pow(2, i), passes - i))
-							/ (pow(2,passes) * (1 / pow(2,i))))
-								- (pow(2.0,i)/pow(2.0,passes+1)));
+		outputShade += (((getScalePass(pow(2.0, 1.0*i), passes - i))
+							/ (pow(2.0,1.0*passes) * (1 / pow(2.0,1.0*i))))
+								- (pow(2.0,1.0*i)/pow(2.0,1.0*passes+1)));
 	}
 	
 	/*if(outputShade > 0.5)	//for land sea map

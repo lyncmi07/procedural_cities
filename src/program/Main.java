@@ -1,6 +1,7 @@
 package program;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.nio.FloatBuffer;
 
 import org.lwjgl.BufferUtils;
@@ -47,6 +48,7 @@ public class Main {
 	 */
 	public static void main(String[] args) throws LWJGLException
 	{
+		System.setProperty("org.lwjgl.librarypath", new File("natives").getAbsolutePath());
 		DisplayManager.createDisplay();
 		
 		ShaderNoTexture3D shader = new ShaderNoTexture3D();
